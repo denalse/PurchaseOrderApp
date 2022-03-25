@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
@@ -24,7 +25,7 @@ public class QuotationService {
     Logger logger = LoggerFactory.getLogger(QuotationService.class);
 
  
-    public ArrayList<String> getItemByName(String quote) {
+    // public ArrayList<String> getItemByName(String quote) {
           
         final String url = "https://quotation.chuklee.com/" + "/order";
         
@@ -40,31 +41,28 @@ public class QuotationService {
             }
 
             RequestEntity<String> req = RequestEntity
-            .post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .headers(“Accept”, MediaType.APPLICATION_JSON)
-            .body(json.toString(), String.class);
+                    .post(url)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    // .headers(“Accept”, MediaType.APPLICATION_JSON)
+                    .body(array.toString(), String.class);
 
         RestTemplate template = new RestTemplate();
 
         ResponseEntity<String> resp = template.exchange(req, String.class);
 
+        try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
+            JsonReader reader = Json.createReader(is);
+            JsonObject object = reader.readObject();
 
 
+        return getQuotations(items);
 
-        return getQuotation(items);
-    }
         // RequestEntity<Void> req = RequestEntity
         //     .get(url)
         //     .accept(MediaType.APPLICATION_JSON)
         //     .build();
-        
-
-
-        ResponseEntity<String> resp = template.exchange(req, String.class);
-        try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
-            JsonReader reader = Json.createReader(is);
-            JsonObject object = reader.readObject();
+             
         
         
         } catch (Exception ex) {
