@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
@@ -27,7 +28,7 @@ public class QuotationService {
  
     // public ArrayList<String> getItemByName(String quote) {
           
-        final String url = "https://quotation.chuklee.com/" + "/order";
+        final String url = "https://quotation.chuklee.com" + "/quotation";
         
     public Optional<Quotation> getQuotations(List<String> items) {
             
@@ -39,6 +40,8 @@ public class QuotationService {
             for (String item : items) {
                 array.add(item);
             }
+
+            JsonArray jsonArray = array.build();
 
             RequestEntity<String> req = RequestEntity
                     .post(url)
@@ -54,7 +57,8 @@ public class QuotationService {
         try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
             JsonReader reader = Json.createReader(is);
             JsonObject object = reader.readObject();
-
+        
+            logger.info(" object >>> " + object);
 
         return getQuotations(items);
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +26,7 @@ import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 import sg.edu.nus.iss.app.purchaseOrder.service.QuotationService;
 
 @RestController
-@RequestMapping(path="/order", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PurchaseOrderRestController {
 
     @Autowired
@@ -43,9 +42,8 @@ public class PurchaseOrderRestController {
         //     .add(“”, user.getName())
         //     .build();
         
-        @PostMapping(consumes="application/json")
-        public ResponseEntity<String> postUser(@RequestBody String payload, 
-                @RequestHeader ("User-Agent") String userAgent) {
+        @PostMapping(path= "/po", consumes="application/json")
+        public ResponseEntity<String> postUser(@RequestBody String payload) {
     
             JsonObject object;
     
@@ -57,20 +55,11 @@ public class PurchaseOrderRestController {
             object = Json.createObjectBuilder()
                 .add("error", ex.getMessage())
                 .build();
-            return ResponseEntity.internalServerError().body(object.toString());
         }
         
-            // private double appleCost = 0.3;
-            // private double durianCost = 0.5;
-            // private double grapesCost = 0.7;
-            // private double orangeCost = 0.9;
-            // private double pearCost = 1.1;
+            // getQuotation auto calculate, no need to define variable
 
         
-
-
-            // Order order = new order(itemName * appleCost);
-
             JsonObjectBuilder calBuilder = Json.createObjectBuilder();
 
             calBuilder.add("invoiceId", invoiceId)
