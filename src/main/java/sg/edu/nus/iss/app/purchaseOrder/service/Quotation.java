@@ -1,13 +1,9 @@
 package sg.edu.nus.iss.app.purchaseOrder.service;
-// TODO: add your package here
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.context.annotation.Scope;
 
-@Bean
-@Scope("singleton")
 public class Quotation {
 
     private String quoteId;
