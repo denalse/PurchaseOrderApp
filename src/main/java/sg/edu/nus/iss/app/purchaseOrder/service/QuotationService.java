@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.*;
 import org.springframework.http.MediaType;
@@ -20,6 +22,9 @@ import jakarta.json.JsonReader;
 public class QuotationService {
     Logger logger = LoggerFactory.getLogger(QuotationService.class);
 
+    public Optional<Quotation> getQuotation (List<String> items) {
+        return getQuotation(items);
+    }
     public ArrayList<String> getItemByName(String itemName) throws IOException {
           
         String url = "/item/" + itemName;

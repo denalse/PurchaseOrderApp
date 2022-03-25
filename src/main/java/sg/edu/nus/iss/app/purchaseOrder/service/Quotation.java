@@ -3,7 +3,9 @@ package sg.edu.nus.iss.app.purchaseOrder.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class Quotation {
 
     private String quoteId;
