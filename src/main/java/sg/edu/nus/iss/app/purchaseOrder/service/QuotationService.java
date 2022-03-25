@@ -1,9 +1,7 @@
 package sg.edu.nus.iss.app.purchaseOrder.service;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +23,7 @@ import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 public class QuotationService {
     Logger logger = LoggerFactory.getLogger(QuotationService.class);
 
- 
-    // public ArrayList<String> getItemByName(String quote) {
+
           
         final String url = "https://quotation.chuklee.com" + "/quotation";
         
@@ -59,6 +56,28 @@ public class QuotationService {
             JsonObject object = reader.readObject();
         
             logger.info(" object >>> " + object);
+
+            // System.out.println(object.getJsonObject("address").getJsonObject("email")
+            //                     .getJsonArray("lineItems").getJsonObject("name").getJsonObject("navigationId"));
+
+            
+            String address = object.getString("address");
+            String email = object.getString("email");
+            JsonArray listItems = object.getJsonArray("listItems");           
+            String name = object.getString("name");
+            String navigationId = object.getString("navigationId");
+
+            //     .getJsonObject("address") //key
+            //     .getJsonObject("email") //key
+            //     .getJsonArray("lineItems") //key
+            //     .getJsonObject("name") //key
+            //     .getString("navigationId"); //value
+                
+                System.out.printf("\r\n Address>>> %s\n", address);
+                System.out.printf("\r\n Email>>> %s\n", email);
+                System.out.printf("\r\n List Items>>> %s\n", listItems);
+                System.out.printf("\r\n Name>>> %s\n", name);
+                System.out.printf("\r\n Navigation ID>>> %s\n", navigationId);
 
         return getQuotations(items);
 
