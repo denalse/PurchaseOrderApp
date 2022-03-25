@@ -57,7 +57,7 @@ public class QuotationService {
             JsonObject object = reader.readObject();
         
             Quotation quot = new Quotation();
-            quot.setQuoteId("quoteId");
+            quot.setQuoteId(object.getString("quoteId"));
             for (int i = 0; i <object. getJsonArray("quotations").size(); i ++) {
 
                 JsonObject obj = object.getJsonArray("quotations").getJsonObject(i);

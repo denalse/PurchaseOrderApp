@@ -22,6 +22,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
+import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 // import sg.edu.nus.iss.app.purchaseOrder.model.Order;
 // import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 import sg.edu.nus.iss.app.purchaseOrder.service.QuotationService;
@@ -62,11 +63,33 @@ public class PurchaseOrderRestController {
 
                 System.out.println(">>> My List: " + itemAdded );
                 logger.info(" >>>> itemList: " + itemList);
-                
+
+
             // getQuotation auto calculate, no need to define variable
             // do a for loop to retrieve items from payload
             
             }
+            Quotation quot = (quoteSvc).getQuotations(itemList).get();
+            String invoiceId = quot.getQuoteId();
+            String name = object.getString("name");
+
+            Double total = 0.0;
+
+            for (int i = 0; i < quot.getQuotations().size(); i++) {
+                JsonObject items = object.getJsonArray("lineItems").getJsonObject(i);
+                total = total + (items.getInt("quantity") * 
+                        quot.getQuotation(items.get("item").toString()));
+
+                JsonObject jsonObj = Json.createObjectBuilder()
+                .add("invoiceId", invoiceId)
+                .add("name", name)
+                .add("total", total)
+                .build();
+
+                return ResponseEntity.ok(jsonObj.toString());
+            }
+
+
             return ResponseEntity.ok("200");
         }
 
