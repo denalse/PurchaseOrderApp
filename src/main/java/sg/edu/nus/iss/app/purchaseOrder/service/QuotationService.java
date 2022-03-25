@@ -56,42 +56,31 @@ public class QuotationService {
             JsonReader reader = Json.createReader(is);
             JsonObject object = reader.readObject();
         
+            Quotation quot = new Quotation();
+            quot.setQuoteId("quoteId");
+            for (int i = 0; i <object. getJsonArray("quotations").size(); i ++) {
+
+                JsonObject obj = object.getJsonArray("quotations").getJsonObject(i);
+                quot.addQuotation(obj.get("item").toString(), 
+                Float.parseFloat(obj.get("unitPrice").toString()));
+            }
+          
             logger.info(" object >>> " + object);
 
             // System.out.println(object.getJsonObject("address").getJsonObject("email")
             //                     .getJsonArray("lineItems").getJsonObject("name").getJsonObject("navigationId"));
 
+            // String address = object.getString("address");
             
-            String address = object.getString("address");
-            String email = object.getString("email");
-            JsonArray listItems = object.getJsonArray("listItems");           
-            String name = object.getString("name");
-            String navigationId = object.getString("navigationId");
+            // .getJsonObject("address") //key
+                // System.out.printf("\r\n Address>>> %s\n", address);
 
-            //     .getJsonObject("address") //key
-            //     .getJsonObject("email") //key
-            //     .getJsonArray("lineItems") //key
-            //     .getJsonObject("name") //key
-            //     .getString("navigationId"); //value
-                
-                System.out.printf("\r\n Address>>> %s\n", address);
-                System.out.printf("\r\n Email>>> %s\n", email);
-                System.out.printf("\r\n List Items>>> %s\n", listItems);
-                System.out.printf("\r\n Name>>> %s\n", name);
-                System.out.printf("\r\n Navigation ID>>> %s\n", navigationId);
-
-        return getQuotations(items);
-
-        // RequestEntity<Void> req = RequestEntity
-        //     .get(url)
-        //     .accept(MediaType.APPLICATION_JSON)
-        //     .build();
-             
-        
+        return Optional.of(quot);
+            
         
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 }

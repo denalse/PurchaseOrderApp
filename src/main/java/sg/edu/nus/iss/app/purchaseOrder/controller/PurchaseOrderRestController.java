@@ -60,8 +60,9 @@ public class PurchaseOrderRestController {
                 String itemAdded = object.getJsonArray("lineItems").getJsonObject(i).getString("item");
                 itemList.add(itemAdded);
 
-                System.out.println(">>> My List: \r\n" + itemAdded );
+                System.out.println(">>> My List: " + itemAdded );
                 logger.info(" >>>> itemList: " + itemList);
+                
             // getQuotation auto calculate, no need to define variable
             // do a for loop to retrieve items from payload
             
