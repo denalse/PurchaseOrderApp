@@ -52,21 +52,21 @@ public class Order {
         this.invoiceId = invoiceId;
     }
 
-    public double calculatorResult() {
-        int result = 0;
-        switch (this.itemName) {
-            case "plus":
-                result = this.itemName + this.rightOperand;
-                break;
+    // public double calculatorResult() {
+    //     int result = 0;
+    //     switch (this.itemName) {
+    //         case "plus":
+    //             result = this.itemName + this.rightOperand;
+    //             break;
          
-            case "multiply":
-                result = this.leftOperand * this.rightOperand;
-                break;
-            case "divide":
-                result = this.leftOperand / this.rightOperand;
-                break;
+    //         case "multiply":
+    //             result = this.leftOperand * this.rightOperand;
+    //             break;
+    //         case "divide":
+    //             result = this.leftOperand / this.rightOperand;
+    //             break;
     
-        }
-    }
+    //     }
+    // }
 
 }

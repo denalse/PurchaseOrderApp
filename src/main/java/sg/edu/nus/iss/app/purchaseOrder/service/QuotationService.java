@@ -25,7 +25,7 @@ public class QuotationService {
     public Optional<Quotation> getQuotation (List<String> items) {
         return getQuotation(items);
     }
-    public ArrayList<String> getItemByName(String itemName) throws IOException {
+    public ArrayList<String> getItemByName(String itemName) {
           
         String url = "/item/" + itemName;
         

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,6 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 import sg.edu.nus.iss.app.purchaseOrder.model.Order;
-import sg.edu.nus.iss.app.purchaseOrder.model.OrderModel;
 import sg.edu.nus.iss.app.purchaseOrder.service.Quotation;
 import sg.edu.nus.iss.app.purchaseOrder.service.QuotationService;
 
@@ -60,7 +60,15 @@ public class PurchaseOrderRestController {
                 .build();
             return ResponseEntity.internalServerError().body(object.toString());
         }
-        Order order = new order(itemName * amount);
+        
+        private double appleCost = 0.3;
+        private double durianCost = 0.5;
+        private double grapesCost = 0.7;
+        private double orangeCost = 0.9;
+        private double pearCost = 1.1;
+
+
+        Order order = new order(itemName * appleCost);
 
         JsonObjectBuilder calBuilder = Json.createObjectBuilder();
 
