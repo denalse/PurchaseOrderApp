@@ -22,7 +22,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 import sg.edu.nus.iss.app.purchaseOrder.model.Order;
-import sg.edu.nus.iss.app.purchaseOrder.service.Quotation;
+import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 import sg.edu.nus.iss.app.purchaseOrder.service.QuotationService;
 
 @RestController
@@ -33,7 +33,7 @@ public class PurchaseOrderRestController {
     private Quotation quote;
 
     @Autowired
-    private Order order;
+    private Order orders;
 
     @GetMapping(path="{quoteId}")
     public ResponseEntity<String> getQuoteId(

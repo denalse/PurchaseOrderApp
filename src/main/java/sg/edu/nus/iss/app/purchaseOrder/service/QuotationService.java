@@ -17,26 +17,50 @@ import org.springframework.web.client.RestTemplate;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 
 @Service
 public class QuotationService {
     Logger logger = LoggerFactory.getLogger(QuotationService.class);
 
-    public Optional<Quotation> getQuotation (List<String> items) {
-        return getQuotation(items);
-    }
-    public ArrayList<String> getItemByName(String itemName) {
+ 
+    public ArrayList<String> getItemByName(String quote) {
           
-        String url = "/item/" + itemName;
+        final String url = "https://quotation.chuklee.com/" + "/order";
         
-        RequestEntity<Void> req = RequestEntity
-            .get(url)
-            .accept(MediaType.APPLICATION_JSON)
-            .build();
-        
+    public Optional<Quotation> getQuotations(List<String> items) {
+            
+            JsonArrayBuilder array = Json.createArrayBuilder();
+
+            //do a for each loop to say 
+            //For each "string" item in the array
+            //items to get quotation for..
+            for (String item : items) {
+                array.add(item);
+            }
+
+            RequestEntity<String> req = RequestEntity
+            .post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .headers(“Accept”, MediaType.APPLICATION_JSON)
+            .body(json.toString(), String.class);
 
         RestTemplate template = new RestTemplate();
-        ///String globalImg="test";
+
+        ResponseEntity<String> resp = template.exchange(req, String.class);
+
+
+
+
+        return getQuotation(items);
+    }
+        // RequestEntity<Void> req = RequestEntity
+        //     .get(url)
+        //     .accept(MediaType.APPLICATION_JSON)
+        //     .build();
+        
+
+
         ResponseEntity<String> resp = template.exchange(req, String.class);
         try (InputStream is = new ByteArrayInputStream(resp.getBody().getBytes())) {
             JsonReader reader = Json.createReader(is);
