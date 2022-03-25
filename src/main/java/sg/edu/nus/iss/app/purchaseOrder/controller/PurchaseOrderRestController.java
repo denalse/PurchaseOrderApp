@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 // import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 // import sg.edu.nus.iss.app.purchaseOrder.model.Order;
-import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
+// import sg.edu.nus.iss.app.purchaseOrder.model.Quotation;
 import sg.edu.nus.iss.app.purchaseOrder.service.QuotationService;
 
 @RestController
@@ -36,40 +34,38 @@ public class PurchaseOrderRestController {
 
     @Autowired
     private QuotationService quoteSvc;
-
-    // @GetMapping(path="{quoteId}")
-    // public ResponseEntity<String> getQuoteId(
-    //         @PathVariable(name="quoteId") String quoteId) {
  
-        
         @PostMapping(path= "/po", consumes="application/json")
         public ResponseEntity<String> postUser(@RequestBody String payload) {
             
             // JsonArray obj = new JsonArray(result);
 
-            JsonObject object; 
+            JsonObject object = null; 
             // = obj.getJsonObject(0);
 
-        List<String> itemList = new ArrayList<String>();
-            for (int i = 0; i < object.getJsonArray("lineItems").size(); i++) {
-                String itemAdded = object.getJsonArray("lineItems").getJsonObject(i).get("items");
-                itemList.add(itemAdded);
-            }
-            logger.info(" >>>> itemList: " + itemList);
         try (InputStream is = new ByteArrayInputStream(payload.getBytes())) {
             JsonReader read = Json.createReader(is);
-            object = read.readObject();
-    
+            object = read.readObject();         
+
         } catch (Exception ex) {
+            // ex.getStackTrace();
             object = Json.createObjectBuilder()
                 .add("error", ex.getMessage())
                 .build();
         }
         
+
+        List<String> itemList = new ArrayList<String>();
+            for (int i = 0; i < object.getJsonArray("lineItems").size(); i++) {
+                String itemAdded = object.getJsonArray("lineItems").getJsonObject(i).getString("item");
+                itemList.add(itemAdded);
+
+                System.out.println(">>> My List: \r\n" + itemAdded );
+                logger.info(" >>>> itemList: " + itemList);
             // getQuotation auto calculate, no need to define variable
             // do a for loop to retrieve items from payload
             
-
+            }
             return ResponseEntity.ok("200");
         }
 

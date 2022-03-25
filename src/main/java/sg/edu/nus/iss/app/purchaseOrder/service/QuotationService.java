@@ -30,6 +30,7 @@ public class QuotationService {
     public Optional<Quotation> getQuotations(List<String> items) {
             
             JsonArrayBuilder array = Json.createArrayBuilder();
+            // JsonObject jObject = array.getJsonArray("quotations").getJsonObject(i);
 
             //do a for each loop to say 
             //For each "string" item in the array
@@ -45,7 +46,7 @@ public class QuotationService {
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
                     // .headers(“Accept”, MediaType.APPLICATION_JSON)
-                    .body(array.toString(), String.class);
+                    .body(jsonArray.toString(), String.class);
 
         RestTemplate template = new RestTemplate();
 
@@ -90,7 +91,6 @@ public class QuotationService {
         
         } catch (Exception ex) {
             ex.printStackTrace();
-            //TODO: handle exception
         }
         return null;
     }
